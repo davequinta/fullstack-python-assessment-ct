@@ -11,7 +11,7 @@ router = APIRouter(prefix="/products", tags=["products"])
 @router.post("/", response_model=ProductResponse)
 def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     try:
-        new_product = Product(**product.dict())
+        new_product = Product(**product.model_dump())
         db.add(new_product)
         db.commit()
         db.refresh(new_product)
