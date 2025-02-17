@@ -34,7 +34,6 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product
-
 @router.put("/{product_id}", response_model=ProductResponse)
 def update_product(product_id: int, product_data: ProductUpdate, db: Session = Depends(get_db)):
     try:
@@ -42,7 +41,7 @@ def update_product(product_id: int, product_data: ProductUpdate, db: Session = D
         if not product:
             raise HTTPException(status_code=404, detail="Product not found")
 
-        for key, value in product_data.dict().items():
+        for key, value in product_data.model_dump().items(): 
             setattr(product, key, value)
 
         db.commit()
