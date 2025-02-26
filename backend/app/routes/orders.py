@@ -44,3 +44,19 @@ def get_order(order_id: int, db: Session = Depends(get_db)):
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     return order
+
+@router.put("/orders/{order_id}/status", response_model=OrderSchema)
+def update_order_status(order_id: int, status: str, db: Session = Depends(get_db)):
+    """
+    Update the status of an existing order.
+    """
+    # Fetch the order
+    order = db.query(Order).filter(Order.id == order_id).first()
+    
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    order.status = status
+    db.commit() 
+    db.refresh(order) 
+    return order

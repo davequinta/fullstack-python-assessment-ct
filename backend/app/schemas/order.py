@@ -19,6 +19,7 @@ class OrderItem(BaseModel):
 
 class Order(BaseModel):
     id: int
+    status: str  # Include the status field
     items: List[OrderItem]
 
     class Config:
