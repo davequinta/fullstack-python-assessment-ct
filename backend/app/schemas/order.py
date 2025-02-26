@@ -1,4 +1,3 @@
-# backend/app/schemas/order.py
 from pydantic import BaseModel
 from typing import List
 
